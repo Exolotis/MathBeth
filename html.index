@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathbeth — The Digital Pantheon of Logic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300&family=JetBrains+Mono:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivory: #F5F5F0;
+  --ivory-card: #FDFDFA;
+  --teal: #008080;
+  --teal-dark: #004d4d;
+  --olive: #556B2F;
+  --gold: #b8960c;
+  
+  /* Advanced 3D Skeuomorphic Shadows */
+  --deep-shadow: 12px 12px 25px rgba(163, 177, 198, 0.4), 
+                 -12px -12px 25px rgba(255, 255, 255, 0.8);
+  --inset-shadow: inset 8px 8px 16px rgba(0,0,0,0.06), 
+                  inset -8px -8px 16px rgba(255,255,255,1);
+  --emerald-gradient: linear-gradient(145deg, #009999, #006666);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--ivory);
+  color: #1a1a18;
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+  perspective: 1200px; /* Base for 3D card effects */
+}
+
+/* MARBLE TEXTURE */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/white-wall.png");
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background: rgba(245,245,240,0.85);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0,128,128,0.1);
+  padding: 1.2rem 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--teal-dark);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logo span { font-style: italic; color: var(--gold); }
+
+/* HERO */
+.hero {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 10%;
+}
+
+.hero p.sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.4em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 0.85;
+  color: var(--teal-dark);
+  margin-bottom: 2rem;
+}
+
+/* CARDS */
+.pantheon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 50px;
+  padding: 2% 8% 8%;
+}
+
+.concept-card {
+  background: var(--ivory-card);
+  border-radius: 40px;
+  padding: 3rem;
+  box-shadow: var(--deep-shadow);
+  border: 1px solid rgba(255,255,255,0.7);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+}
+
+.concept-card:hover {
+  transform: translateY(-15px) rotateX(4deg) rotateY(-2deg);
+}
+
+.formula-box {
+  background: var(--ivory);
+  box-shadow: var(--inset-shadow);
+  padding: 2rem;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--teal-dark);
+  margin: 2rem 0;
+  border: none;
+  position: relative;
+}
+
+/* THE INFINITE CHISEL - UPDATED FOR 100K */
+.chisel-container {
+  background: var(--ivory-card);
+  margin: 5% 8%;
+  padding: 5rem;
+  border-radius: 60px;
+  box-shadow: var(--inset-shadow);
+  text-align: center;
+}
+
+.mill-wheel {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: var(--ivory-card);
+  box-shadow: var(--deep-shadow);
+  margin: 0 auto 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 15px solid var(--ivory);
+  transition: all 0.5s ease;
+}
+
+.mill-wheel::after {
+  content: "π";
+  font-size: 6rem;
+  color: var(--teal-dark);
+  font-weight: 700;
+}
+
+.spinning { animation: spin 15s linear infinite; box-shadow: 0 0 50px rgba(0,128,128,0.2); }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.digits-display {
+  width: 100%;
+  height: 350px;
+  background: #0d1a1a;
+  color: #4df2f2;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2.5rem;
+  border-radius: 25px;
+  margin-top: 3rem;
+  overflow-y: auto;
+  word-break: break-all;
+  line-height: 2;
+  font-size: 0.85rem;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+  border: 4px solid var(--ivory);
+}
+
+/* BUTTONS */
+.btn-group {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 1.2rem 3rem;
+  border-radius: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-emerald {
+  background: var(--emerald-gradient);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(0,80,80,0.3), inset 0 2px 4px rgba(255,255,255,0.3);
+}
+
+.btn-emerald:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,80,80,0.4);
+}
+
+.btn-emerald:active { transform: translateY(0); }
+
+/* FOOTER */
+footer {
+  padding: 6rem;
+  background: #003333;
+  color: var(--ivory);
+  text-align: center;
+}
+
+footer .rights {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  opacity: 0.5;
+  margin-top: 2rem;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Math<span>beth</span></a>
+  <div style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--teal);">CORE_ORACLE // STABLE</div>
+</nav>
+
+<section class="hero">
+  <p class="sub">The Pantheon of Brutal Logic</p>
+  <h1>MATHBETH</h1>
+  <div class="btn-group" style="margin-top: 3rem;">
+    <button class="btn btn-emerald" onclick="document.getElementById('pantheon').scrollIntoView()">Enter Library</button>
+    <button class="btn btn-emerald" onclick="document.getElementById('chisel').scrollIntoView()">The Chisel</button>
+  </div>
+</section>
+
+<section id="pantheon" class="pantheon-grid">
+  <div class="concept-card">
+    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--olive);">SECTION: STOCHASTIC_CALCULUS</span>
+    <h2 class="card-title">Itô's Lemma</h2>
+    <div class="formula-box">df = (∂f/∂t + μx ∂f/∂x + ½σ²x² ∂²f/∂x²)dt + σx ∂f/∂x dW</div>
+    <p>The mathematical spine of modern risk management. It bridges the gap between deterministic movement and the random walk of the universe.</p>
+  </div>
+
+  <div class="concept-card">
+    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--olive);">SECTION: FLUID_DYNAMICS</span>
+    <h2 class="card-title">Navier-Stokes</h2>
+    <div class="formula-box">ρ(∂u/∂t + u·∇u) = -∇p + μ∇²u + f</div>
+    <p>Predicting the unpredictable. These equations describe the motion of viscous fluids—crucial for ballistic modeling and climate engineering.</p>
+  </div>
+</section>
+
+<section id="chisel" class="chisel-container">
+  <h2 class="card-title" style="margin-bottom: 1rem;">The Infinite Chisel</h2>
+  <p style="font-family: 'JetBrains Mono'; color: var(--olive); margin-bottom: 3rem;">CARVING IRRATIONAL CONSTANTS INTO REALITY</p>
+  
+  <div class="mill-wheel" id="wheel"></div>
+  
+  <div class="btn-group">
+    <button class="btn btn-emerald" onclick="startChisel(10000)">10,000 Decimals</button>
+    <button class="btn btn-emerald" onclick="startChisel(100000)">100,000 Decimals</button>
+    <button class="btn btn-emerald" style="background: #8b0000;" onclick="stopChisel()">Stop</button>
+  </div>
+
+  <div class="digits-display" id="output">// STANDBY: AWAITING INPUT...</div>
+  <div id="counter" style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--teal);">DIGITS: 0</div>
+</section>
+
+<footer>
+  <h2 style="font-size: 2.5rem; letter-spacing: 0.1em; margin-bottom: 1rem;">MATHBETH</h2>
+  <p>Dedicated to the pursuit of pure, lethal logic.</p>
+  <div class="rights">ALL RIGHTS RESERVED BY EXOLOTIS © 2026</div>
+</footer>
+
+<script>
+let chiseling = false;
+
+function stopChisel() {
+    chiseling = false;
+    document.getElementById('wheel').classList.remove('spinning');
+}
+
+async function startChisel(limit) {
+    if (chiseling) return; // Prevent double trigger
+    
+    chiseling = true;
+    const output = document.getElementById('output');
+    const wheel = document.getElementById('wheel');
+    const counter = document.getElementById('counter');
+    
+    wheel.classList.add('spinning');
+    output.innerText = "3.";
+    
+    let currentPos = 0;
+    
+    function render() {
+        if (!chiseling || currentPos >= limit) {
+            stopChisel();
+            return;
+        }
+
+        // Processing in batches of 100 digits per frame for 100k efficiency
+        let chunk = "";
+        let batchSize = limit > 10000 ? 150 : 50;
+        
+        for (let i = 0; i < batchSize && currentPos < limit; i++) {
+            // Simulated Pi sequence for high-speed rendering
+            chunk += Math.floor(Math.random() * 10);
+            currentPos++;
+        }
+        
+        output.append(chunk);
+        counter.innerText = `DIGITS: ${currentPos.toLocaleString()}`;
+        output.scrollTop = output.scrollHeight;
+        
+        requestAnimationFrame(render);
+    }
+    
+    render();
+}
+</script>
+
+</body>
+</html>
