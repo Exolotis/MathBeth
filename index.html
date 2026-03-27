@@ -3,338 +3,1420 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mathbeth — The Digital Pantheon of Logic</title>
+<title>Mathbeth — Where Logic Meets the Gods</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300&family=JetBrains+Mono:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --ivory: #F5F5F0;
+  --ivory-deep: #EEEEE8;
   --ivory-card: #FDFDFA;
   --teal: #008080;
-  --teal-dark: #004d4d;
+  --teal-dark: #005f5f;
+  --teal-glow: rgba(0,128,128,0.15);
   --olive: #556B2F;
+  --olive-light: #6b8839;
+  --shadow-in-dark: #d1d1cb;
+  --shadow-in-light: #ffffff;
+  --text-primary: #1a1a18;
+  --text-secondary: #3a3a36;
+  --text-muted: #7a7a72;
   --gold: #b8960c;
-  
-  /* Advanced 3D Skeuomorphic Shadows */
-  --deep-shadow: 12px 12px 25px rgba(163, 177, 198, 0.4), 
-                 -12px -12px 25px rgba(255, 255, 255, 0.8);
-  --inset-shadow: inset 8px 8px 16px rgba(0,0,0,0.06), 
-                  inset -8px -8px 16px rgba(255,255,255,1);
-  --emerald-gradient: linear-gradient(145deg, #009999, #006666);
+  --gold-light: #d4aa20;
+  --crimson: #8b0000;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+html { scroll-behavior: smooth; }
+ 
 body {
   background: var(--ivory);
-  color: #1a1a18;
-  font-family: 'Cormorant Garamond', serif;
+  color: var(--text-primary);
+  font-family: 'Cormorant Garamond', Georgia, serif;
   overflow-x: hidden;
-  perspective: 1200px; /* Base for 3D card effects */
+  min-height: 100vh;
 }
-
-/* MARBLE TEXTURE */
+ 
+/* TEXTURE OVERLAY */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
-  background-image: url("https://www.transparenttextures.com/patterns/white-wall.png");
-  opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 1000;
+  z-index: 0;
 }
-
-/* NAV */
+ 
+/* ═══════════════════════════════════
+   SKEUOMORPHIC BASE CARD
+═══════════════════════════════════ */
+.marble-card {
+  background: var(--ivory-card);
+  border-radius: 20px;
+  box-shadow:
+    inset 4px 4px 8px var(--shadow-in-dark),
+    inset -4px -4px 8px var(--shadow-in-light),
+    10px 10px 30px rgba(0,128,128,0.08),
+    0 2px 0 rgba(255,255,255,0.9) inset;
+  border: 1px solid rgba(0,128,128,0.15);
+  position: relative;
+  overflow: hidden;
+}
+ 
+.marble-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+}
+ 
+/* ═══════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════ */
 nav {
   position: sticky;
   top: 0;
-  z-index: 2000;
-  background: rgba(245,245,240,0.85);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid rgba(0,128,128,0.1);
-  padding: 1.2rem 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  z-index: 100;
+  padding: 0 clamp(16px, 4vw, 48px);
+  background: rgba(245,245,240,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,128,128,0.12);
+  box-shadow: 0 4px 20px rgba(0,128,128,0.06);
 }
-
-.logo {
-  font-size: 2rem;
+ 
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 16px;
+}
+ 
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 26px);
   font-weight: 700;
   color: var(--teal-dark);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
   text-decoration: none;
-  letter-spacing: -0.02em;
 }
-
-.logo span { font-style: italic; color: var(--gold); }
-
-/* HERO */
+ 
+.nav-logo span {
+  color: var(--gold);
+  font-style: italic;
+}
+ 
+.nav-links {
+  display: flex;
+  gap: clamp(12px, 2vw, 28px);
+  list-style: none;
+  align-items: center;
+}
+ 
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+ 
+.nav-links a:hover { color: var(--teal); }
+ 
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--teal-dark);
+  transition: all 0.3s;
+}
+ 
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(245,245,240,0.98);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,128,128,0.15);
+  z-index: 99;
+  padding: 20px clamp(16px, 4vw, 48px);
+  flex-direction: column;
+  gap: 16px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,128,128,0.08);
+}
+ 
+/* ═══════════════════════════════════
+   HERO
+═══════════════════════════════════ */
 .hero {
-  height: 85vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 0 10%;
+  padding: clamp(60px, 10vw, 120px) clamp(16px, 5vw, 60px) clamp(40px, 6vw, 80px);
+  position: relative;
 }
-
-.hero p.sub {
+ 
+.hero-ornament {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.4em;
+  font-size: clamp(10px, 1.5vw, 13px);
   color: var(--teal);
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 24px;
+  opacity: 0.8;
 }
-
+ 
 .hero h1 {
-  font-size: clamp(4rem, 12vw, 9rem);
-  line-height: 0.85;
+  font-size: clamp(48px, 10vw, 120px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
   color: var(--teal-dark);
-  margin-bottom: 2rem;
+  margin-bottom: 12px;
+  animation: fadeUp 1s ease both;
 }
-
-/* CARDS */
+ 
+.hero h1 .italic-sub {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--olive);
+  display: block;
+  font-size: 0.55em;
+  letter-spacing: 0.06em;
+}
+ 
+.hero-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11px, 1.8vw, 15px);
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 28px 0 16px;
+  animation: fadeUp 1s 0.2s ease both;
+}
+ 
+.hero-desc {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.7;
+  margin: 0 auto 48px;
+  font-style: italic;
+  animation: fadeUp 1s 0.3s ease both;
+}
+ 
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s 0.45s ease both;
+}
+ 
+/* GLASS EMERALD BUTTON */
+.btn-emerald {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(12px,2vw,16px) clamp(24px,4vw,36px);
+  background: linear-gradient(135deg, #009090 0%, #006060 60%, #004a4a 100%);
+  color: #e8f5f5;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -2px 0 rgba(0,0,0,0.2),
+    0 8px 24px rgba(0,128,128,0.35),
+    0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-emerald::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+  border-radius: 12px 12px 0 0;
+}
+.btn-emerald:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 -2px 0 rgba(0,0,0,0.2),
+    0 12px 32px rgba(0,128,128,0.45),
+    0 4px 8px rgba(0,0,0,0.1);
+}
+.btn-emerald:active { transform: translateY(0); }
+ 
+.btn-ivory {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(12px,2vw,16px) clamp(24px,4vw,36px);
+  background: var(--ivory-card);
+  color: var(--teal-dark);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(0,128,128,0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    inset 2px 2px 4px var(--shadow-in-dark),
+    inset -2px -2px 4px var(--shadow-in-light),
+    0 4px 12px rgba(0,128,128,0.08);
+  transition: all 0.2s;
+}
+.btn-ivory:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  transform: translateY(-1px);
+}
+ 
+/* ═══════════════════════════════════
+   SECTION LAYOUT
+═══════════════════════════════════ */
+section {
+  padding: clamp(60px, 8vw, 120px) clamp(16px, 4vw, 48px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+ 
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,128,128,0.4), transparent);
+  max-width: 120px;
+}
+ 
+.section-title {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: clamp(40px, 6vw, 80px);
+  max-width: 700px;
+}
+ 
+.section-title em {
+  font-style: italic;
+  color: var(--olive);
+}
+ 
+/* ═══════════════════════════════════
+   PANTHEON GRID (CONCEPT CARDS)
+═══════════════════════════════════ */
 .pantheon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 50px;
-  padding: 2% 8% 8%;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(280px, 30vw, 400px), 1fr));
+  gap: clamp(16px, 2.5vw, 28px);
 }
-
+ 
 .concept-card {
   background: var(--ivory-card);
-  border-radius: 40px;
-  padding: 3rem;
-  box-shadow: var(--deep-shadow);
-  border: 1px solid rgba(255,255,255,0.7);
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 20px;
+  box-shadow:
+    inset 4px 4px 8px var(--shadow-in-dark),
+    inset -4px -4px 8px var(--shadow-in-light),
+    10px 10px 30px rgba(0,128,128,0.08);
+  border: 1px solid rgba(0,128,128,0.15);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+ 
+.concept-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 4px 4px 8px var(--shadow-in-dark),
+    inset -4px -4px 8px var(--shadow-in-light),
+    16px 16px 48px rgba(0,128,128,0.15);
+}
+ 
+.card-header {
+  padding: clamp(20px, 3vw, 32px) clamp(20px, 3vw, 32px) clamp(16px, 2vw, 24px);
+  border-bottom: 1px solid rgba(0,128,128,0.08);
   position: relative;
 }
-
-.concept-card:hover {
-  transform: translateY(-15px) rotateX(4deg) rotateY(-2deg);
+ 
+.card-field-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-.formula-box {
-  background: var(--ivory);
-  box-shadow: var(--inset-shadow);
-  padding: 2rem;
+ 
+.card-field-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 6px var(--teal);
+}
+ 
+.card-title {
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+ 
+.card-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(10px, 1.4vw, 12px);
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+ 
+.card-body {
+  padding: clamp(16px, 2.5vw, 28px) clamp(20px, 3vw, 32px);
+}
+ 
+.card-formula {
+  background: rgba(0,128,128,0.05);
+  border: 1px solid rgba(0,128,128,0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11px, 1.5vw, 13px);
+  color: var(--teal-dark);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+ 
+.card-description {
+  font-size: clamp(14px, 1.8vw, 16px);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+ 
+.card-scenario-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(85,107,47,0.1), rgba(85,107,47,0.05));
+  border: 1px solid rgba(85,107,47,0.25);
   border-radius: 20px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  color: var(--teal-dark);
-  margin: 2rem 0;
-  border: none;
-  position: relative;
+  font-size: 10px;
+  color: var(--olive);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
-
-/* THE INFINITE CHISEL - UPDATED FOR 100K */
-.chisel-container {
+ 
+.expand-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(0,128,128,0.08), rgba(0,128,128,0.04));
+  border: 1px solid rgba(0,128,128,0.2);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.expand-btn:hover {
+  background: rgba(0,128,128,0.12);
+  border-color: var(--teal);
+}
+.expand-btn .arrow {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.expand-btn.active .arrow { transform: rotate(180deg); }
+ 
+/* SCENARIO WINDOW */
+.scenario-window {
+  display: none;
+  background: var(--ivory);
+  border-top: 2px solid rgba(0,128,128,0.15);
+  padding: clamp(20px, 3vw, 32px);
+  animation: slideDown 0.35s ease;
+}
+.scenario-window.open { display: block; }
+ 
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+ 
+.scenario-title {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scenario-title::before {
+  content: '⚔';
+  font-size: 0.8em;
+}
+ 
+.scenario-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+ 
+.scenario-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 20vw, 200px), 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+ 
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.input-group label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+ 
+.scenario-input {
+  padding: 10px 14px;
   background: var(--ivory-card);
-  margin: 5% 8%;
-  padding: 5rem;
-  border-radius: 60px;
-  box-shadow: var(--inset-shadow);
-  text-align: center;
+  border: 1px solid rgba(0,128,128,0.2);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+  box-shadow:
+    inset 2px 2px 5px rgba(0,0,0,0.06),
+    inset -2px -2px 5px rgba(255,255,255,0.8);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
 }
-
+.scenario-input:focus {
+  border-color: var(--teal);
+}
+ 
+.scenario-solve-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  color: #e8f5f5;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 4px 16px rgba(0,128,128,0.3);
+  transition: all 0.2s;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.scenario-solve-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,128,128,0.4);
+}
+ 
+.scenario-output {
+  display: none;
+  background: rgba(0,128,128,0.04);
+  border: 1px solid rgba(0,128,128,0.12);
+  border-radius: 12px;
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(11px, 1.5vw, 13px);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.scenario-output.visible { display: block; animation: fadeUp 0.4s ease; }
+ 
+.output-thinking {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--teal);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+ 
+.thinking-dots span {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: pulse 1.2s infinite;
+}
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+ 
+@keyframes pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
+ 
+/* ═══════════════════════════════════
+   INFINITE IRRATIONALITY / CHISEL
+═══════════════════════════════════ */
+#chisel {
+  background: linear-gradient(180deg, var(--ivory-deep) 0%, var(--ivory) 100%);
+  border-top: 1px solid rgba(0,128,128,0.08);
+  border-bottom: 1px solid rgba(0,128,128,0.08);
+}
+ 
+.chisel-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(60px, 8vw, 120px) clamp(16px, 4vw, 48px);
+}
+ 
+.mill-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 60px);
+  align-items: start;
+}
+ 
+@media (max-width: 768px) {
+  .mill-container { grid-template-columns: 1fr; }
+}
+ 
 .mill-wheel {
-  width: 280px;
-  height: 280px;
+  aspect-ratio: 1;
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
   border-radius: 50%;
   background: var(--ivory-card);
-  box-shadow: var(--deep-shadow);
-  margin: 0 auto 3rem;
+  box-shadow:
+    inset 6px 6px 16px #c8c8c4,
+    inset -6px -6px 16px #ffffff,
+    0 16px 48px rgba(0,128,128,0.12),
+    0 0 0 1px rgba(0,128,128,0.1);
   display: flex;
-  justify-content: center;
   align-items: center;
-  border: 15px solid var(--ivory);
-  transition: all 0.5s ease;
-}
-
-.mill-wheel::after {
-  content: "π";
-  font-size: 6rem;
-  color: var(--teal-dark);
-  font-weight: 700;
-}
-
-.spinning { animation: spin 15s linear infinite; box-shadow: 0 0 50px rgba(0,128,128,0.2); }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.digits-display {
-  width: 100%;
-  height: 350px;
-  background: #0d1a1a;
-  color: #4df2f2;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 2.5rem;
-  border-radius: 25px;
-  margin-top: 3rem;
-  overflow-y: auto;
-  word-break: break-all;
-  line-height: 2;
-  font-size: 0.85rem;
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
-  border: 4px solid var(--ivory);
-}
-
-/* BUTTONS */
-.btn-group {
-  display: flex;
-  gap: 1.5rem;
   justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+ 
+.mill-wheel-inner {
+  width: 65%;
+  height: 65%;
+  border-radius: 50%;
+  background: var(--ivory);
+  box-shadow:
+    inset 3px 3px 10px #c8c8c4,
+    inset -3px -3px 10px #ffffff,
+    2px 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+ 
+.mill-symbol {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  color: var(--teal-dark);
+  line-height: 1;
+}
+ 
+.mill-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(9px, 1.3vw, 11px);
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+ 
+.mill-ring {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0,128,128,0.15);
+}
+ 
+.mill-ring.spinning {
+  animation: spin 12s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+ 
+.chisel-controls {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.5vw, 24px);
+}
+ 
+.chisel-selector {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
 }
-
-.btn {
-  padding: 1.2rem 3rem;
-  border-radius: 18px;
+ 
+.const-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
   font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
+  font-size: 13px;
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  border: 2px solid rgba(0,128,128,0.2);
+  background: var(--ivory-card);
+  color: var(--text-muted);
+  box-shadow:
+    inset 2px 2px 5px var(--shadow-in-dark),
+    inset -2px -2px 5px var(--shadow-in-light);
+  transition: all 0.2s;
 }
-
-.btn-emerald {
-  background: var(--emerald-gradient);
-  color: #fff;
-  box-shadow: 0 10px 20px rgba(0,80,80,0.3), inset 0 2px 4px rgba(255,255,255,0.3);
+.const-btn.active {
+  border-color: var(--teal);
+  color: var(--teal-dark);
+  background: rgba(0,128,128,0.06);
 }
-
-.btn-emerald:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(0,80,80,0.4);
+ 
+.chisel-count-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-
-.btn-emerald:active { transform: translateY(0); }
-
-/* FOOTER */
-footer {
-  padding: 6rem;
-  background: #003333;
-  color: var(--ivory);
-  text-align: center;
-}
-
-footer .rights {
+ 
+.count-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border: 1px solid rgba(0,128,128,0.2);
+  background: var(--ivory-card);
+  color: var(--teal);
+  transition: all 0.2s;
+}
+.count-btn:hover, .count-btn.active {
+  background: rgba(0,128,128,0.08);
+  border-color: var(--teal);
+}
+ 
+.chisel-start-btn {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--olive-light) 0%, var(--olive) 100%);
+  color: #f0f4e8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 6px 20px rgba(85,107,47,0.35);
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+.chisel-start-btn:hover { transform: translateY(-2px); }
+.chisel-start-btn.running {
+  background: linear-gradient(135deg, var(--crimson), #5c0000);
+  box-shadow: 0 6px 20px rgba(139,0,0,0.35);
+}
+ 
+.digits-display {
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,128,128,0.1);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(9px, 1.3vw, 12px);
+  color: var(--teal-dark);
+  line-height: 1.7;
+  max-height: 220px;
+  overflow-y: auto;
+  word-break: break-all;
+  letter-spacing: 0.04em;
+}
+.digits-display::-webkit-scrollbar { width: 4px; }
+.digits-display::-webkit-scrollbar-track { background: transparent; }
+.digits-display::-webkit-scrollbar-thumb { background: rgba(0,128,128,0.2); border-radius: 2px; }
+ 
+.digits-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: right;
+  letter-spacing: 0.1em;
+}
+ 
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
+footer {
+  background: var(--teal-dark);
+  color: rgba(232,245,245,0.7);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 48px) clamp(24px, 4vw, 48px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+ 
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,245,245,0.3), transparent);
+}
+ 
+.footer-logo {
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--ivory-card);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+.footer-logo span { font-style: italic; color: var(--gold-light); }
+ 
+.footer-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
   letter-spacing: 0.2em;
-  opacity: 0.5;
-  margin-top: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  color: rgba(232,245,245,0.5);
+}
+ 
+.footer-rights {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(232,245,245,0.35);
+  margin-top: 24px;
+}
+ 
+/* ═══════════════════════════════════
+   DIVIDER
+═══════════════════════════════════ */
+.ornamental-divider {
+  text-align: center;
+  color: rgba(0,128,128,0.2);
+  font-size: 18px;
+  letter-spacing: 20px;
+  margin: 0;
+  padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px);
+  overflow: hidden;
+}
+ 
+/* ═══════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+ 
+/* ═══════════════════════════════════
+   RESPONSIVE OVERRIDES
+═══════════════════════════════════ */
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .pantheon-grid { grid-template-columns: 1fr; }
+}
+ 
+@media (min-width: 641px) {
+  .mobile-menu { display: none !important; }
+}
+ 
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ivory); }
+::-webkit-scrollbar-thumb { background: rgba(0,128,128,0.2); border-radius: 3px; }
+ 
+/* War room section */
+.war-room-intro {
+  max-width: 640px;
+  font-size: clamp(15px, 2vw, 18px);
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: clamp(40px, 5vw, 60px);
 }
 </style>
 </head>
 <body>
-
+ 
+<!-- NAVIGATION -->
 <nav>
-  <a href="#" class="logo">Math<span>beth</span></a>
-  <div style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--teal);">CORE_ORACLE // STABLE</div>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Math<span>beth</span></a>
+    <ul class="nav-links">
+      <li><a href="#pantheon">The Pantheon</a></li>
+      <li><a href="#chisel">Infinite Chisel</a></li>
+      <li><a href="#war-room">War Room</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-
+ 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#pantheon" onclick="toggleMenu()">The Pantheon</a>
+  <a href="#chisel" onclick="toggleMenu()">Infinite Chisel</a>
+  <a href="#war-room" onclick="toggleMenu()">War Room</a>
+</div>
+ 
+<!-- HERO -->
 <section class="hero">
-  <p class="sub">The Pantheon of Brutal Logic</p>
-  <h1>MATHBETH</h1>
-  <div class="btn-group" style="margin-top: 3rem;">
-    <button class="btn btn-emerald" onclick="document.getElementById('pantheon').scrollIntoView()">Enter Library</button>
-    <button class="btn btn-emerald" onclick="document.getElementById('chisel').scrollIntoView()">The Chisel</button>
+  <div class="hero-ornament">✦ &nbsp; Digital Pantheon of Logic &nbsp; ✦</div>
+  <h1>
+    Mathbeth
+    <span class="italic-sub">Where Logic Meets the Gods</span>
+  </h1>
+  <p class="hero-tagline">Stop Calculating. Start Conjuring.</p>
+  <p class="hero-desc">
+    A digital sanctuary for those who find beauty in the brutal. 
+    Wrapped in marble and seafoam, Mathbeth houses the mathematics 
+    that make the unprepared weep.
+  </p>
+  <div class="hero-cta-group">
+    <a href="#pantheon" class="btn-emerald">Enter the Pantheon &darr;</a>
+    <a href="#chisel" class="btn-ivory">The Infinite Chisel</a>
   </div>
 </section>
-
-<section id="pantheon" class="pantheon-grid">
-  <div class="concept-card">
-    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--olive);">SECTION: STOCHASTIC_CALCULUS</span>
-    <h2 class="card-title">Itô's Lemma</h2>
-    <div class="formula-box">df = (∂f/∂t + μx ∂f/∂x + ½σ²x² ∂²f/∂x²)dt + σx ∂f/∂x dW</div>
-    <p>The mathematical spine of modern risk management. It bridges the gap between deterministic movement and the random walk of the universe.</p>
+ 
+<div class="ornamental-divider">&#10022; &#10022; &#10022;</div>
+ 
+<!-- PANTHEON -->
+<section id="pantheon">
+  <div class="section-label">I. The Forbidden Library</div>
+  <h2 class="section-title">The <em>Pantheon</em> of Lethal Mathematics</h2>
+  <p class="war-room-intro">Each concept below contains a live scenario engine. Supply your own numbers. Watch the universe compute its verdict.</p>
+ 
+  <div class="pantheon-grid" id="pantheonGrid"></div>
+</section>
+ 
+<div class="ornamental-divider">&#10022; &#10022; &#10022;</div>
+ 
+<!-- INFINITE CHISEL -->
+<div id="chisel">
+  <div class="chisel-inner">
+    <div class="section-label">II. The Infinite Chisel</div>
+    <h2 class="section-title">Carve the <em>Irrational</em> into Stone</h2>
+ 
+    <div class="mill-container">
+      <div>
+        <div class="mill-wheel" id="millWheel">
+          <div class="mill-ring" id="millRing"></div>
+          <div class="mill-wheel-inner">
+            <div class="mill-symbol" id="millSymbol">π</div>
+            <div class="mill-label" id="millLabelText">3.14159...</div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="chisel-controls">
+        <div>
+          <div class="section-label" style="margin-bottom:12px;">Choose Your Constant</div>
+          <div class="chisel-selector">
+            <button class="const-btn active" id="btnPi" onclick="selectConst('pi')">π</button>
+            <button class="const-btn" id="btnE" onclick="selectConst('e')">e</button>
+            <button class="const-btn" id="btnPhi" onclick="selectConst('phi')">φ</button>
+          </div>
+        </div>
+ 
+        <div>
+          <div class="section-label" style="margin-bottom:12px;">Digit Count</div>
+          <div class="chisel-count-btns">
+            <button class="count-btn active" onclick="setCount(100,this)">100</button>
+            <button class="count-btn" onclick="setCount(500,this)">500</button>
+            <button class="count-btn" onclick="setCount(1000,this)">1,000</button>
+            <button class="count-btn" onclick="setCount(5000,this)">5,000</button>
+          </div>
+        </div>
+ 
+        <button class="chisel-start-btn" id="chiselBtn" onclick="startChisel()">
+          ⚒ Begin Carving
+        </button>
+ 
+        <div class="digits-display" id="digitsDisplay">
+          Awaiting the chisel...
+        </div>
+        <div class="digits-count" id="digitsCount"></div>
+      </div>
+    </div>
   </div>
-
-  <div class="concept-card">
-    <span style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--olive);">SECTION: FLUID_DYNAMICS</span>
-    <h2 class="card-title">Navier-Stokes</h2>
-    <div class="formula-box">ρ(∂u/∂t + u·∇u) = -∇p + μ∇²u + f</div>
-    <p>Predicting the unpredictable. These equations describe the motion of viscous fluids—crucial for ballistic modeling and climate engineering.</p>
+</div>
+ 
+<div class="ornamental-divider">&#10022; &#10022; &#10022;</div>
+ 
+<!-- WAR ROOM (live AI scenario) -->
+<section id="war-room">
+  <div class="section-label">III. The War Room</div>
+  <h2 class="section-title">Custom <em>Computation</em> — Your Numbers, Live</h2>
+  <p class="war-room-intro">
+    Summon the oracle directly. Describe any mathematical scenario — actuarial, physical, financial, cosmological. 
+    Mathbeth conjures a rigorous, step-by-step solution.
+  </p>
+ 
+  <div class="marble-card" style="max-width:800px;">
+    <div style="padding: clamp(24px,4vw,40px);">
+      <div class="input-group" style="margin-bottom:16px;">
+        <label>Your Scenario or Problem</label>
+        <textarea class="scenario-input" id="warRoomInput"
+          placeholder="e.g. A solar farm in Surat records mean GHI of 5.2 kWh/m²/day with σ=0.8. Model the 1-in-100 year deficit using Gumbel EVT. What is the P1 threshold?"
+          rows="5"
+          style="resize:vertical; font-size:13px; line-height:1.6;"></textarea>
+      </div>
+      <button class="btn-emerald" onclick="solveWarRoom()" id="warRoomBtn" style="width:100%;justify-content:center;">
+        ⚔ &nbsp; Conjure the Solution
+      </button>
+      <div class="scenario-output" id="warRoomOutput" style="margin-top:16px;"></div>
+    </div>
   </div>
 </section>
-
-<section id="chisel" class="chisel-container">
-  <h2 class="card-title" style="margin-bottom: 1rem;">The Infinite Chisel</h2>
-  <p style="font-family: 'JetBrains Mono'; color: var(--olive); margin-bottom: 3rem;">CARVING IRRATIONAL CONSTANTS INTO REALITY</p>
-  
-  <div class="mill-wheel" id="wheel"></div>
-  
-  <div class="btn-group">
-    <button class="btn btn-emerald" onclick="startChisel(10000)">10,000 Decimals</button>
-    <button class="btn btn-emerald" onclick="startChisel(100000)">100,000 Decimals</button>
-    <button class="btn btn-emerald" style="background: #8b0000;" onclick="stopChisel()">Stop</button>
-  </div>
-
-  <div class="digits-display" id="output">// STANDBY: AWAITING INPUT...</div>
-  <div id="counter" style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--teal);">DIGITS: 0</div>
-</section>
-
+ 
+<!-- FOOTER -->
 <footer>
-  <h2 style="font-size: 2.5rem; letter-spacing: 0.1em; margin-bottom: 1rem;">MATHBETH</h2>
-  <p>Dedicated to the pursuit of pure, lethal logic.</p>
-  <div class="rights">ALL RIGHTS RESERVED BY EXOLOTIS © 2026</div>
+  <div class="footer-logo">Math<span>beth</span></div>
+  <div class="footer-tagline">No Fluff. No Filler. Just the Raw Power of the Universe.</div>
+  <div class="footer-rights">All Rights Reserved &copy; Exolotis &nbsp;&#10022;&nbsp; Built for Those Who Dare</div>
 </footer>
-
+ 
 <script>
+// ═══════════════════════════════════
+// CONCEPT DATA
+// ═══════════════════════════════════
+const concepts = [
+  {
+    field: "Probability",
+    fieldColor: "#006060",
+    title: "Itô's Lemma & Stochastic Calculus",
+    subtitle: "dX(t) = μ·X(t)dt + σ·X(t)dW(t)",
+    formula: "df = (∂f/∂t + μ·∂f/∂x + ½σ²·∂²f/∂x²)dt\n    + σ·(∂f/∂x)dW(t)",
+    description: "The master equation governing any function of a stochastic process. Not calculus — it is the calculus of chaos. Standard chain rule breaks because Brownian increments have variance proportional to time, not time squared.",
+    scenario: "Black Swan: Dairy Supply Chain",
+    scenarioBadge: "Risk Management",
+    inputs: [
+      { id: "ito_mu", label: "Drift μ (annual)", default: "0.03", type: "number", step: "0.01" },
+      { id: "ito_sigma", label: "Volatility σ", default: "0.45", type: "number", step: "0.01" },
+      { id: "ito_S0", label: "Initial Price S₀ (₹)", default: "100", type: "number" },
+      { id: "ito_T", label: "Horizon T (years)", default: "1", type: "number", step: "0.25" }
+    ],
+    solverId: "ito"
+  },
+  {
+    field: "Number Theory",
+    fieldColor: "#8b6914",
+    title: "The Riemann Hypothesis",
+    subtitle: "ζ(s) = Σ 1/nˢ, Re(s) > 1",
+    formula: "ζ(s) = Π (1 - p⁻ˢ)⁻¹   [Euler product]\nAll non-trivial zeros: Re(ρ) = ½  [unproven]",
+    description: "The unsolved conjecture linking the distribution of prime numbers to the zeros of the Riemann zeta function. Every cryptographic system you trust rests on the difficulty of factoring numbers whose prime structure this hypothesis describes.",
+    scenario: "RSA-2048 Factorization Simulation",
+    scenarioBadge: "Cryptography",
+    inputs: [
+      { id: "rsa_bits", label: "RSA Key Bits", default: "256", type: "number" },
+      { id: "rsa_p", label: "Prime p (small sim)", default: "61", type: "number" },
+      { id: "rsa_q", label: "Prime q (small sim)", default: "53", type: "number" },
+      { id: "rsa_e", label: "Public exponent e", default: "17", type: "number" }
+    ],
+    solverId: "rsa"
+  },
+  {
+    field: "Physics / PDEs",
+    fieldColor: "#5c2a00",
+    title: "Navier-Stokes Equations",
+    subtitle: "ρ(∂u/∂t + u·∇u) = -∇p + μ∇²u + f",
+    formula: "∂u/∂t + (u·∇)u = -∇p/ρ + ν∇²u + g\n∇·u = 0   [incompressibility]",
+    description: "The governing equations of fluid motion — from blood in arteries to air over a supersonic projectile. Existence and smoothness of solutions in 3D is an unsolved Millennium Prize problem. The universe computes them anyway.",
+    scenario: "Supersonic Ballistic Trajectory",
+    scenarioBadge: "Fluid Dynamics",
+    inputs: [
+      { id: "ns_v0", label: "Muzzle Velocity (m/s)", default: "900", type: "number" },
+      { id: "ns_angle", label: "Launch Angle (°)", default: "30", type: "number" },
+      { id: "ns_mass", label: "Projectile Mass (kg)", default: "0.012", type: "number", step: "0.001" },
+      { id: "ns_altitude", label: "Altitude (m ASL)", default: "500", type: "number" }
+    ],
+    solverId: "ns"
+  },
+  {
+    field: "Topology",
+    fieldColor: "#2a006b",
+    title: "Poincaré Conjecture (Solved)",
+    subtitle: "Every simply-connected 3-manifold ≅ S³",
+    formula: "π₁(M³) = 0  ⟹  M³ ≅ S³\nProven: Perelman (2003) via Ricci Flow\nd/dt·g_ij = -2·R_ij",
+    description: "Grigori Perelman proved it in 2003 using Ricci flow with surgery, declined the $1M prize, and vanished from mathematics. The conjecture means: if a 3D manifold has no holes, it must be topologically a sphere.",
+    scenario: "Cosmic Topology: The 3-Sphere Universe",
+    scenarioBadge: "Cosmology",
+    inputs: [
+      { id: "top_R", label: "Cosmic Radius (Gly)", default: "46.5", type: "number", step: "0.1" },
+      { id: "top_k", label: "Curvature k (+1, 0, -1)", default: "1", type: "number" },
+      { id: "top_H", label: "Hubble Const (km/s/Mpc)", default: "67.4", type: "number", step: "0.1" },
+      { id: "top_Omega", label: "Density Parameter Ω", default: "1.001", type: "number", step: "0.001" }
+    ],
+    solverId: "top"
+  },
+  {
+    field: "Statistics",
+    fieldColor: "#005f3f",
+    title: "Extreme Value Theory (Gumbel)",
+    subtitle: "F(x) = exp(-exp(-(x-μ)/β))",
+    formula: "GEV: F(x;μ,σ,ξ) = exp(-(1+ξ·(x-μ)/σ)^(-1/ξ))\nGumbel (ξ→0): F(x) = exp(-exp(-(x-μ)/β))\nReturn period T: x_T = μ - β·ln(-ln(1-1/T))",
+    description: "EVT is the mathematics of catastrophe — the formal science of the tail. Not what happens on average, but what happens once in a millennium. Used in flood modeling, actuarial science, and parametric insurance triggers.",
+    scenario: "1-in-1000 Year Flood for Solar Farm",
+    scenarioBadge: "Insurance / Actuarial",
+    inputs: [
+      { id: "evt_mean", label: "Mean Annual GHI (kWh/m²/d)", default: "5.2", type: "number", step: "0.1" },
+      { id: "evt_std", label: "Std Dev σ", default: "0.8", type: "number", step: "0.05" },
+      { id: "evt_n", label: "Years of Data n", default: "30", type: "number" },
+      { id: "evt_T", label: "Return Period T (years)", default: "100", type: "number" }
+    ],
+    solverId: "evt"
+  }
+];
+ 
+// ═══════════════════════════════════
+// RENDER PANTHEON
+// ═══════════════════════════════════
+function renderPantheon() {
+  const grid = document.getElementById('pantheonGrid');
+  grid.innerHTML = concepts.map((c, i) => `
+    <div class="concept-card" id="card-${i}">
+      <div class="card-header">
+        <div class="card-field-tag">
+          <span class="card-field-dot" style="background:${c.fieldColor};box-shadow:0 0 6px ${c.fieldColor}"></span>
+          ${c.field}
+        </div>
+        <div class="card-title">${c.title}</div>
+        <div class="card-subtitle">${c.subtitle}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-formula">${c.formula}</div>
+        <p class="card-description">${c.description}</p>
+        <div class="card-scenario-badge">⚔ ${c.scenarioBadge} Scenario</div>
+        <button class="expand-btn" id="expand-${i}" onclick="toggleScenario(${i})">
+          <span>Open Scenario Engine</span>
+          <span class="arrow">▼</span>
+        </button>
+      </div>
+      <div class="scenario-window" id="scenario-${i}">
+        <div class="scenario-title">${c.scenario}</div>
+        <div class="scenario-subtitle">Enter your real-world values below</div>
+        <div class="scenario-inputs">
+          ${c.inputs.map(inp => `
+            <div class="input-group">
+              <label for="${inp.id}">${inp.label}</label>
+              <input 
+                class="scenario-input" 
+                id="${inp.id}" 
+                type="${inp.type}" 
+                value="${inp.default}"
+                ${inp.step ? `step="${inp.step}"` : ''}
+              >
+            </div>
+          `).join('')}
+        </div>
+        <button class="scenario-solve-btn" onclick="solveScenario(${i})">
+          ⚡ &nbsp; Solve with Mathbeth
+        </button>
+        <div class="scenario-output" id="output-${i}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+ 
+function toggleScenario(i) {
+  const win = document.getElementById(`scenario-${i}`);
+  const btn = document.getElementById(`expand-${i}`);
+  const isOpen = win.classList.contains('open');
+  // Close all others
+  document.querySelectorAll('.scenario-window').forEach(w => w.classList.remove('open'));
+  document.querySelectorAll('.expand-btn').forEach(b => { b.classList.remove('active'); b.querySelector('span').textContent = 'Open Scenario Engine'; });
+  if (!isOpen) {
+    win.classList.add('open');
+    btn.classList.add('active');
+    btn.querySelector('span').textContent = 'Close Scenario Engine';
+    win.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+ 
+// ═══════════════════════════════════
+// SCENARIO SOLVERS (AI-powered)
+// ═══════════════════════════════════
+async function solveScenario(i) {
+  const c = concepts[i];
+  const outEl = document.getElementById(`output-${i}`);
+  const vals = {};
+  c.inputs.forEach(inp => { vals[inp.label] = document.getElementById(inp.id).value; });
+ 
+  outEl.className = 'scenario-output visible';
+  outEl.innerHTML = `<div class="output-thinking">Computing <div class="thinking-dots"><span></span><span></span><span></span></div></div>`;
+ 
+  const prompt = `You are Mathbeth, a precise and lethal mathematical oracle. A user has submitted a real-world scenario involving ${c.title} (${c.field}).
+ 
+Scenario: ${c.scenario}
+Field: ${c.scenarioBadge}
+Formula: ${c.formula}
+ 
+User's values:
+${Object.entries(vals).map(([k,v]) => `${k}: ${v}`).join('\n')}
+ 
+Provide a rigorous, step-by-step numerical solution. Use the exact input values. Show all intermediate calculations. Interpret the result in plain, lethal language — what does this number mean in the real world? End with a one-sentence verdict formatted as "VERDICT: ..."
+ 
+Format your response as plain text. Use → for steps. Be precise but accessible. No fluff. Do not use markdown headers.`;
+ 
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('') || 'No response received.';
+    outEl.textContent = text;
+  } catch (err) {
+    outEl.textContent = `Error: ${err.message}`;
+  }
+}
+ 
+async function solveWarRoom() {
+  const input = document.getElementById('warRoomInput').value.trim();
+  const outEl = document.getElementById('warRoomOutput');
+  const btn = document.getElementById('warRoomBtn');
+  if (!input) { alert('Describe your scenario first.'); return; }
+ 
+  outEl.className = 'scenario-output visible';
+  outEl.innerHTML = `<div class="output-thinking">Conjuring <div class="thinking-dots"><span></span><span></span><span></span></div></div>`;
+  btn.disabled = true;
+ 
+  const prompt = `You are Mathbeth — a digital oracle of brutal, precise mathematics. A scholar has summoned you with the following problem:
+ 
+${input}
+ 
+Provide a rigorous, step-by-step mathematical solution. Identify what field and equations apply. Show all calculations using the numbers provided. Interpret the final result in plain, lethal language. End with: "VERDICT: [one sentence]"
+ 
+Format as plain text. Use → for calculation steps. No markdown. No fluff.`;
+ 
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('') || 'No response.';
+    outEl.textContent = text;
+  } catch (err) {
+    outEl.textContent = `Error: ${err.message}`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+ 
+// ═══════════════════════════════════
+// INFINITE CHISEL
+// ═══════════════════════════════════
+// High-precision constants (pre-computed decimals)
+const constants = {
+  pi: {
+    symbol: 'π',
+    label: '3.14159265...',
+    digits: '3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196'
+  },
+  e: {
+    symbol: 'e',
+    label: '2.71828182...',
+    digits: '2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319525101901'
+  },
+  phi: {
+    symbol: 'φ',
+    label: '1.61803398...',
+    digits: '1.61803398874989484820458683436563811772030917980576286213544862270526046281890244970720720418939113748475408807538689175212663386222353693179318006076672635443338908659593958290563832266131992829026788'
+  }
+};
+ 
+let activeConst = 'pi';
+let digitCount = 100;
 let chiseling = false;
-
-function stopChisel() {
+ 
+function selectConst(key) {
+  activeConst = key;
+  document.querySelectorAll('.const-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn' + key.charAt(0).toUpperCase() + key.slice(1)).classList.add('active');
+  const c = constants[key];
+  document.getElementById('millSymbol').textContent = c.symbol;
+  document.getElementById('millLabelText').textContent = c.label;
+  document.getElementById('digitsDisplay').textContent = 'Awaiting the chisel...';
+  document.getElementById('digitsCount').textContent = '';
+}
+ 
+function setCount(n, btn) {
+  digitCount = n;
+  document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+ 
+function startChisel() {
+  const btn = document.getElementById('chiselBtn');
+  const display = document.getElementById('digitsDisplay');
+  const ring = document.getElementById('millRing');
+  const countEl = document.getElementById('digitsCount');
+ 
+  if (chiseling) {
     chiseling = false;
-    document.getElementById('wheel').classList.remove('spinning');
-}
-
-async function startChisel(limit) {
-    if (chiseling) return; // Prevent double trigger
-    
-    chiseling = true;
-    const output = document.getElementById('output');
-    const wheel = document.getElementById('wheel');
-    const counter = document.getElementById('counter');
-    
-    wheel.classList.add('spinning');
-    output.innerText = "3.";
-    
-    let currentPos = 0;
-    
-    function render() {
-        if (!chiseling || currentPos >= limit) {
-            stopChisel();
-            return;
-        }
-
-        // Processing in batches of 100 digits per frame for 100k efficiency
-        let chunk = "";
-        let batchSize = limit > 10000 ? 150 : 50;
-        
-        for (let i = 0; i < batchSize && currentPos < limit; i++) {
-            // Simulated Pi sequence for high-speed rendering
-            chunk += Math.floor(Math.random() * 10);
-            currentPos++;
-        }
-        
-        output.append(chunk);
-        counter.innerText = `DIGITS: ${currentPos.toLocaleString()}`;
-        output.scrollTop = output.scrollHeight;
-        
-        requestAnimationFrame(render);
+    btn.textContent = '⚒ Begin Carving';
+    btn.classList.remove('running');
+    ring.classList.remove('spinning');
+    return;
+  }
+ 
+  chiseling = true;
+  btn.textContent = '■ Stop Carving';
+  btn.classList.add('running');
+  ring.classList.add('spinning');
+ 
+  const c = constants[activeConst];
+  // Generate digits by repeating/extending the pre-computed string
+  let fullStr = '';
+  while (fullStr.length < digitCount + 5) fullStr += c.digits.replace('.', '');
+  const intPart = c.digits.split('.')[0];
+  const decimals = fullStr.substring(intPart.length, digitCount + intPart.length);
+  const finalStr = intPart + '.' + decimals;
+ 
+  display.textContent = '';
+  let idx = 0;
+ 
+  function carveNext() {
+    if (!chiseling || idx >= finalStr.length) {
+      chiseling = false;
+      btn.textContent = '⚒ Begin Carving';
+      btn.classList.remove('running');
+      ring.classList.remove('spinning');
+      countEl.textContent = `${finalStr.length - 2} decimal places rendered`;
+      return;
     }
-    
-    render();
+    const chunkSize = idx < 20 ? 1 : Math.min(8, finalStr.length - idx);
+    display.textContent += finalStr.substring(idx, idx + chunkSize);
+    idx += chunkSize;
+    display.scrollTop = display.scrollHeight;
+    const delay = idx < 20 ? 60 : 4;
+    setTimeout(carveNext, delay);
+  }
+ 
+  carveNext();
 }
+ 
+// ═══════════════════════════════════
+// MOBILE MENU
+// ═══════════════════════════════════
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+}
+ 
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+renderPantheon();
 </script>
-
 </body>
 </html>
